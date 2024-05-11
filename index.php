@@ -22,8 +22,8 @@
             
             <h5 class="card-title">Login</h5>
             <form method="POST" action="./login/login.php">
-                Username: <br>
-                <input type="text" name="username" required placeholder="username1" class="form-control"><br>
+                Email: <br>
+                <input type="email" name="email" required placeholder="cognome.nome@itismeucci.com" class="form-control"><br>
         
                 Password: <br>
                 <div class="input-group">

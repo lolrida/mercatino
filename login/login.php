@@ -2,7 +2,7 @@
 
 include('../connessione.php');  // Questo include il file di connessione in modo da poter utilizzare $conn in questa pagina
 session_start();
-$username = $_POST['username'];
+$mail = $_POST['email'];
 $password =$_POST['pw'];
 $passw = hash("sha256",$password);
 
@@ -12,7 +12,7 @@ $_SESSION['user'] = "";
 $_SESSION['id']="";
 $_SESSION['pass']=$passw;
 // Verifica se l'username esiste nel database
-$checkQuery = "SELECT * FROM utente WHERE username = '$username'";
+$checkQuery = "SELECT * FROM utente WHERE email = '$mail'";
 $result = $conn->query($checkQuery);
 
 if ($result->num_rows > 0) 
@@ -25,7 +25,7 @@ if ($result->num_rows > 0)
         // Reindirizza alla pagina home se la password è corretta
         $_SESSION['log'] = true;
         $_SESSION['user'] = $username;
-        header("Location: ..\\front-end\home.php");
+        header("Location: ../home.php");
     }
     else 
     {
@@ -37,7 +37,7 @@ if ($result->num_rows > 0)
 else 
 {
     // Imposta il messaggio di stato e reindirizza alla pagina di indice se l'username non viene trovato
-    $_SESSION['status'] = "Username non trovato";
+    $_SESSION['status'] = "Email non registrata";
     header("Location: ..\index.php");
 }
 ?>
