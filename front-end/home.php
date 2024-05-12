@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if($_SESSION['log'] ==false )
+    {
+        $_SESSION['status']="Devi effettuare l'accesso prima di poter accedere a questa pagina";
+        header("Location: ../index.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,44 +17,60 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../css/styles.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-2 px-lg-5">
-                <img src="img/logo.jpeg" class="me-4" height="7%" width="7%">
-                <a class="navbar-brand" href="#!">Mercatino meucci</a>
+                <img src="../img/logo.png" class="me-4" height="7%" width="7%">
+                <a class="navbar-brand" href="#!">Mercatino Meucci</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li>
-                            <a href="">
+                            <a href="./sendeed.php">
                                 <button class="btn btn-outline-dark me-4 my-1" >
-                                    <i class="bi-cart-fill me-1"></i>
-                                    Proposte fatte
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                                    <i class="bi bi-box-arrow-in-up"></i>
+                                        Proposte inviate
+                                    <span class="badge bg-dark text-white ms-1 rounded-pill">
+                                        <?php
+                                            include('../connessione.php');
+                                            $id=$_SESSION['id'];
+                                            $query="SELECT COUNT(*) as num FROM proposta WHERE proposta.idUtente='$id'";
+                                            $result=$conn->query($query);
+                                            $row=$result->fetch_assoc();
+                                            echo $row['num'];
+                                        ?>
+                                    </span>
                                 </button>
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <button class="btn btn-outline-dark my-1">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    Proposte ricevute
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <a href="./recived.php">
+                                <button class="btn btn-outline-dark me-5 my-1">
+                                    <i class="bi bi-box-arrow-in-down"></i>
+                                        Proposte ricevute
+                                    <span class="badge bg-dark text-white ms-1 rounded-pill">
+                                        <?php
+                                            include('../connessione.php');
+                                            $id=$_SESSION['id'];
+                                            $query="SELECT COUNT(*) as num FROM proposta JOIN annuncio ON annuncio.id=proposta.idAnnuncio WHERE annuncio.idUtente='$id'";
+                                            $result=$conn->query($query);
+                                            $row=$result->fetch_assoc();
+                                            echo $row['num'];
+                                        ?>
+                                    </span>
                                 </button>
                             </a>
                         </li>
-                        <li class="ms-auto">
-                            <a href="">
-                                <button class="btn btn-outline-dark my-1 mx-5" >
+                        <li>
+                            <a href="./profile.php">
+                                <button class="btn btn-outline-dark my-1">
                                     <i class="bi bi-person-circle"></i>
                                 </button>
                             </a>
-                        </li>
-                        </li>
-                        
+                        </li>                        
                     </ul>
                 </div>
             </div>

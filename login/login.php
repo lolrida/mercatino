@@ -9,7 +9,7 @@ $passw = hash("sha256",$password);
 // Imposta il login a false e l'utente a vuoto
 $_SESSION['log'] = false;
 $_SESSION['user'] = "";
-$_SESSION['id']="";
+$_SESSION['id'];
 $_SESSION['pass']=$passw;
 // Verifica se l'username esiste nel database
 $checkQuery = "SELECT * FROM utente WHERE email = '$mail'";
@@ -25,7 +25,8 @@ if ($result->num_rows > 0)
         // Reindirizza alla pagina home se la password è corretta
         $_SESSION['log'] = true;
         $_SESSION['user'] = $username;
-        header("Location: ../home.php");
+        $_SESSION['id']=$row['id'];
+        header("Location: ../front-end/home.php");
     }
     else 
     {
